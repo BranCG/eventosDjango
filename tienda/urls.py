@@ -16,7 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from boleta import views
+from listaBoletas import views as lista
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('boleta/', views.crear_boleta),
+    path('listaBoleta/', lista.mostrar_boletas)
 ]
