@@ -9,47 +9,56 @@ PRODUCTOS = [{'nombre_producto':'TV LED', 'precio' : '109.990'},{'nombre_product
 
 #Validar que esto es un rut
 def validar_rut(rut):
-    return rut.isdigit() and (len(rut) == 8 or len(rut) == 9)
+    return (len(rut) == 8 or len(rut) == 9)
 
 COMPRAS = []
 
 def crear_boleta(request):
-    try:
-        rut = input("Ingrese su rut: ")
-        if not validar_rut(rut):
-            print("RUT NO VALIDO, debe contener 8 o 9 digitos.")
-            return HttpResponse("<h1>ERROR, RUT INVALIDO</h1>", status=400) 
-        nombre = input("Ingrese su nobre: ")
+    while True:
+        try:
+            while True:
+                try:
+                    rut = input("Ingrese su rut: ")
+                    if not validar_rut(rut):
+                        print("RUT NO VALIDO, debe contener 8 o 9 digitos.")
+                        return HttpResponse("<h1>ERROR, RUT INVALIDO</h1>", status=400) 
+                except ValueError:
+                    print("Error, ingrese valores numericos para el RUT.")  
+                else:
+                    break     
 
-        print("Productos disponibles: ")
-        for idx,producto in enumerate(PRODUCTOS):
-            print(f"{idx + 1}: {producto['nombre_producto']} - ${producto['precio']}")
+            nombre = input("Ingrese su nombre: ")
 
-        producto_idx = int(input("Elige el producto (numero): ")) - 1
-        producto_seleccionado = PRODUCTOS[producto_idx]
+            print("Productos disponibles: ")
+            for idx,producto in enumerate(PRODUCTOS):
+                print(f"{idx + 1}: {producto['nombre_producto']} - ${producto['precio']}")
 
-    except Exception as e:
-        print(f"Ha ocurrido un error {e}")
-    
-    else:
-        print("TU BOLETA ESTA LISTA, ve a la web")
-        boleta = {
-            "Rut" : rut,
-            "Nombre" : nombre,
-            "Producto" : producto_seleccionado['nombre_producto'],
-            "Precio" : producto_seleccionado['precio'],
-        }
-        COMPRAS.append(boleta)
+            producto_idx = int(input("Elige el producto (numero): ")) - 1
+            producto_seleccionado = PRODUCTOS[producto_idx]
+
+        except Exception as e:
+            print(f"Ha ocurrido un erro{e}")
+        
+        else:
+            print("TU BOLETA ESTA LISTA, ve a la web")
+            boleta = {
+                "Rut" : rut,
+                "Nombre" : nombre,
+                "Producto" : producto_seleccionado['nombre_producto'],
+                "Precio" : producto_seleccionado['precio'],
+            }
+            COMPRAS.append(boleta)
+            break
 
 
     respuesta=f'''
     <html>
     <body>
-     <h1>TU BOLETA</h1>
-     <p>RUT: {rut}</p>
-     <p>NOMBRE:{nombre}</p>
-     <p>PRODUCTO: {boleta["Producto"]}</p>
-     <p>PRECIO: ${boleta["Precio"]}</p>
+    <h1>TU BOLETA</h1>
+    <p>RUT:{rut}</p>
+    <p>NOMBRE:{nombre}</p>
+    <p>PRODUCTO: {boleta["Producto"]}</p>
+    <p>PRECIO: ${boleta["Precio"]}</p>
     </body>
     </html>  
     '''

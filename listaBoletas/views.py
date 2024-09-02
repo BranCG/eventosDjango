@@ -12,7 +12,7 @@ def mostrar_boletas(request):
         Rut: {compra['Rut']} <br>
         Nombre: {compra['Nombre']} <br>
         Producto: {compra['Producto']} <br>
-        Precio: {compra['Precio']} <br>
+        Precio: ${compra['Precio']} <br>
         </p>
     '''
 
