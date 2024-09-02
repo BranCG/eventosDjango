@@ -21,11 +21,11 @@ def crear_boleta(request):
                     rut = input("Ingrese su rut: ")
                     if not validar_rut(rut):
                         print("RUT NO VALIDO, debe contener 8 o 9 digitos.")
-                        return HttpResponse("<h1>ERROR, RUT INVALIDO</h1>", status=400) 
+                        return HttpResponse("<h1>ERROR, RUT INVALIDO</h1>", status=400)
                 except ValueError:
                     print("Error, ingrese valores numericos para el RUT.")  
                 else:
-                    break     
+                    break
 
             nombre = input("Ingrese su nombre: ")
 
